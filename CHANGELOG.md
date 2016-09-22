@@ -1,3 +1,9 @@
+###[1.4.0](https://github.com/cucumber/cucumber-js/compare/v1.4.0...master)
+
+#### New Features
+
+* custom formatter passed to cucumber using options (Partha Boocha)
+
 ### [master (unreleased)](https://github.com/cucumber/cucumber-js/compare/v1.3.0...master)
 
 ### [1.3.0](https://github.com/cucumber/cucumber-js/compare/v1.2.2...v1.3.0) (2016-09-08)
