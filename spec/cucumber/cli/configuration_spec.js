@@ -12,6 +12,7 @@ describe("Cucumber.Cli.Configuration", function () {
     args = [];
     configuration = Cucumber.Cli.Configuration(options, args);
     context.configuration = configuration;
+    Cucumber.Listener.CustomFormatter =  function CustomFormatter() {};
   });
 
   itBehavesLikeAllCucumberConfigurations(context);
@@ -32,6 +33,7 @@ describe("Cucumber.Cli.Configuration", function () {
       spyOn(Cucumber.Listener, 'ProgressFormatter');
       spyOn(Cucumber.Listener, 'PrettyFormatter');
       spyOn(Cucumber.Listener, 'SummaryFormatter');
+      spyOn(Cucumber.Listener, 'CustomFormatter');
       spyOn(Cucumber.SupportCode.StepDefinitionSnippetBuilder, 'JavaScriptSyntax').and.returnValue(snippetSyntax);
       formatter = createSpy("formatter");
     });
@@ -96,6 +98,22 @@ describe("Cucumber.Cli.Configuration", function () {
       });
 
       it("returns the summary formatter", function () {
+        expect(configuration.getFormatters()).toEqual([formatter]);
+      });
+    });
+
+    describe("when the formatter name is \"custom\"", function () {
+      beforeEach(function () {
+        options.format = ['custom'];
+        Cucumber.Listener.CustomFormatter.and.returnValue(formatter);
+      });
+
+      it("creates a new custom formatter", function () {
+        configuration.getFormatters();
+        expect(Cucumber.Listener.CustomFormatter).toHaveBeenCalledWith(formatterOptions);
+      });
+
+      it("returns the custom formatter", function () {
         expect(configuration.getFormatters()).toEqual([formatter]);
       });
     });
